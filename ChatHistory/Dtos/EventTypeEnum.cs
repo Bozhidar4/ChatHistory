@@ -1,6 +1,6 @@
 ﻿namespace ChatHistory.Api.Dtos
 {
-    public enum EventTypeEnumDto
+    public enum EventTypeEnum
     {
         Enter = 1,
         Leave = 2,

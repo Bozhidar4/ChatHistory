@@ -28,15 +28,14 @@ namespace ChatHistory.Api.Core
 
             var errorMessage = exception.Message + exception.InnerException ?? "\nInner exception: " + exception?.InnerException?.Message;
 
-            if (exception is ValidationException ||
-                exception is System.ComponentModel.DataAnnotations.ValidationException)
+            if (exception is ArgumentNullException)
             {
                 code = HttpStatusCode.BadRequest;
             }
 
-            if (exception is ValidationException)
+            if (exception is ArgumentNullException)
             {
-                errorMessage = errorMessage.Replace("Validation failed: \r\n -- ", "");
+                errorMessage = errorMessage.Replace("Argument cannot be null: \r\n -- ", "");
 
                 int innerExceptionIndex = errorMessage.IndexOf("\nInner exception", StringComparison.InvariantCulture);
                 if (innerExceptionIndex >= 0)

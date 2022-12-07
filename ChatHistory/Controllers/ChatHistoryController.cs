@@ -17,7 +17,9 @@ namespace ChatHistory.Controllers
         { }
 
         [HttpGet("{date:DateTime}/{aggregationLevel}")]
-        public async Task<IActionResult> GetAllByAggregationLevel([FromRoute] DateTime date, AggregationLevelEnum aggregationLevel)
+        public async Task<IActionResult> GetAllByAggregationLevel(
+            [FromRoute] DateTime date,
+            AggregationLevelEnum aggregationLevel)
         {
             return await Ok(new GetEventRequest(date, aggregationLevel));
         }

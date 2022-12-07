@@ -28,15 +28,12 @@ namespace ChatHistory.Api.Requests.Handlers
             var events = _mapper.Map<IEnumerable<EventDto>>(
                 await _eventRepository.GetByDateAsync(request.Date));
 
-            switch (request.AggregationLevel)
+            return request.AggregationLevel switch
             {
-                case AggregationLevelEnum.Continuously:
-                    return _formatDataService.FormatDataContinuously(events);
-                case AggregationLevelEnum.Hourly:
-                    return _formatDataService.FormatDataHourly(events);
-                default:
-                    return new List<string>();
-            }
+                AggregationLevelEnum.Continuously => _formatDataService.FormatDataContinuously(events),
+                AggregationLevelEnum.Hourly => _formatDataService.FormatDataHourly(events),
+                _ => new List<string>(),
+            };
         }
     }
 }

@@ -22,12 +22,5 @@ namespace ChatHistory.Core
             var response = await _mediator.Send(query);
             return base.Ok(response);
         }
-
-        protected async Task<IActionResult> NoContent<TResponse>(IRequest<TResponse> command)
-        {
-            await _mediator.Send(command);
-            await _unitOfWork.SaveChangesAsync();
-            return base.NoContent();
-        }
     }
 }

@@ -71,16 +71,16 @@ namespace ChatHistory.Api.Services
 
             switch (e.EventTypeId)
             {
-                case (int)EventTypeEnumDto.Enter:
+                case (int)EventTypeEnum.Enter:
                     message.Append($" enters the room");
                     break;
-                case (int)EventTypeEnumDto.Leave:
+                case (int)EventTypeEnum.Leave:
                     message.Append($" leaves");
                     break;
-                case (int)EventTypeEnumDto.Comment:
+                case (int)EventTypeEnum.Comment:
                     message.Append($" comments: '{e.Comment}'");
                     break;
-                case (int)EventTypeEnumDto.HighFive:
+                case (int)EventTypeEnum.HighFive:
                     message.Append($" high-fives {e.ReceiverUser?.Name}");
                     break;
             }
@@ -100,7 +100,7 @@ namespace ChatHistory.Api.Services
         {
             switch (e.EventTypeId)
             {
-                case (int)EventTypeEnumDto.Enter:
+                case (int)EventTypeEnum.Enter:
                     eventMessagesModel.EntriesCount++;
                     bool multipleEntries = eventMessagesModel.EntriesCount > 1;
 
@@ -108,7 +108,7 @@ namespace ChatHistory.Api.Services
                     eventMessagesModel?.EntriesMessage?
                         .Append($"{eventMessagesModel.EntriesCount} {(multipleEntries ? "people" : "person")} entered");
                     break;
-                case (int)EventTypeEnumDto.Leave:
+                case (int)EventTypeEnum.Leave:
                     eventMessagesModel.LeavingsCount++;
                     bool multipleLeavings = eventMessagesModel.LeavingsCount > 1;
 
@@ -116,7 +116,7 @@ namespace ChatHistory.Api.Services
                     eventMessagesModel?.LeavingsMessage?
                         .Append($"{eventMessagesModel.LeavingsCount} {(multipleLeavings ? "people" : "person")} left");
                     break;
-                case (int)EventTypeEnumDto.Comment:
+                case (int)EventTypeEnum.Comment:
                     eventMessagesModel.CommentsCount++;
                     bool multipleComments = eventMessagesModel.CommentsCount > 1;
 
@@ -124,7 +124,7 @@ namespace ChatHistory.Api.Services
                     eventMessagesModel?.CommentsMessage?
                         .Append($"{eventMessagesModel.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}");
                     break;
-                case (int)EventTypeEnumDto.HighFive:
+                case (int)EventTypeEnum.HighFive:
                     eventMessagesModel.HighFivesCount++;
                     bool multipleHighFives = eventMessagesModel.HighFivesCount > 1;
 

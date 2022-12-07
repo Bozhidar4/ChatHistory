@@ -22,7 +22,7 @@ namespace ChatHistory.Tests.Repositories
         [Theory]
         [InlineData("2022-12-06", 12)]
         [InlineData("2022-12-05", 3)]
-        public void GetByDateAsync_Should_Return_All_Records_For_The_Give_Date_In_Ascending_Order(string date,
+        public void GetByDateAsync_Should_Return_All_Records_For_The_Given_Date_In_Ascending_Order(string date,
                                                                                                   int expectedRecords)
         {
             // Arrange

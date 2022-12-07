@@ -23,7 +23,7 @@ namespace ChatHistory.Tests.Services
                     comment,
                     new DateTime(2022, 12, 5, 12, 57, 33),
                     eventType,
-                    new EventType(1, EventTypeEnumDto.Enter.ToString()),
+                    new EventType(1, EventTypeEnum.Enter.ToString()),
                     new User(1, "Bob"),
                     new User(2, "Kate"))
             };
@@ -53,7 +53,7 @@ namespace ChatHistory.Tests.Services
                     comment,
                     new DateTime(2022, 12, 5, 12, 57, 33),
                     eventType,
-                    new EventType(1, EventTypeEnumDto.Enter.ToString()),
+                    new EventType(1, EventTypeEnum.Enter.ToString()),
                     new User(1, "Bob"),
                     new User(2, "Kate"))
             };
