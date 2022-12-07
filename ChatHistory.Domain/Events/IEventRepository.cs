@@ -4,6 +4,6 @@ namespace ChatHistory.Domain.Events
 {
     public interface IEventRepository : IRepository<Event, int>
     {
-        Task<IEnumerable<Event>> GetAllInAscendingOrderAsync();
+        Task<IEnumerable<Event>> GetByDateAsync(DateTime date);
     }
 }

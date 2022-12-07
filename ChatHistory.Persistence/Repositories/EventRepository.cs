@@ -12,32 +12,16 @@ namespace ChatHistory.Persistence.Repositories
             : base(dbContext)
         { }
 
-        public async Task<IEnumerable<Event>> GetAllInAscendingOrderAsync()
+        public async Task<IEnumerable<Event>> GetByDateAsync(DateTime date)
         {
-            return GetEvents();
-        }
-
-        
-
-        public async Task<IEnumerable<Event>> GetAllByGranularityLevelAsync()
-        {
-            var events = await Query
+            return await Query
                 .Include(e => e.User)
                 .Include(e => e.EventType)
                 .Include(e => e.ReceiverUser)
+                .Where(e => e.DateTime.Date == date.Date)
                 .OrderBy(e => e.DateTime)
+                .AsNoTracking()
                 .ToListAsync();
-
-            return events;
-        }
-
-        private IEnumerable<Event> GetEvents()
-        {
-            return Query
-                .Include(e => e.User)
-                .Include(e => e.EventType)
-                .Include(e => e.ReceiverUser)
-                .OrderBy(e => e.DateTime);
         }
     }
 }

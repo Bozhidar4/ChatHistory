@@ -6,6 +6,5 @@ namespace ChatHistory.Api.Services.Interfaces
     {
         IEnumerable<string> FormatDataContinuously(IEnumerable<EventDto> events);
         IEnumerable<string> FormatDataHourly(IEnumerable<EventDto> events);
-        IEnumerable<string> FormatDataDaily(IEnumerable<EventDto> events);
     }
 }

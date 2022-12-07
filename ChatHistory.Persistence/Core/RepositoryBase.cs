@@ -22,15 +22,5 @@ namespace ChatHistory.Persistence.Core
             _dbContext = dbContext;
             _set = dbContext.Set<T>();
         }
-
-        public async Task<IList<T>> GetAllAsync()
-        {
-            return await _set.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _set.AsNoTracking().Where(predicate).ToListAsync();
-        }
     }
 }

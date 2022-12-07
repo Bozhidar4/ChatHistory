@@ -16,16 +16,10 @@ namespace ChatHistory.Controllers
             IUnitOfWork unitOfWork) : base(mediator, unitOfWork)
         { }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetEventRequest request)
+        [HttpGet("{date:DateTime}/{aggregationLevel}")]
+        public async Task<IActionResult> GetAllByAggregationLevel([FromRoute] DateTime date, AggregationLevelEnum aggregationLevel)
         {
-            return await Ok(request);
-        }
-
-        [HttpGet("{aggregationLevel}")]
-        public async Task<IActionResult> GetAllByAggregationLevel([FromRoute] AggregationLevelEnum aggregationLevel)
-        {
-            return await Ok(new GetEventByAggregationLevelRequest(aggregationLevel));
+            return await Ok(new GetEventRequest(date, aggregationLevel));
         }
     }
 }

@@ -57,7 +57,6 @@ void ConfigurePersistance(IServiceCollection services)
 
 void ConfigureRepositories(IServiceCollection services)
 {
-    services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IEventRepository, EventRepository>();
 }
 

@@ -20,11 +20,20 @@ namespace ChatHistory.Api.Services
         public IEnumerable<string> FormatDataHourly(IEnumerable<EventDto> events)
         {
             var messages = new Dictionary<string, List<string>>();
-            var eventMessages = new EventMessages();
+            var eventMessagesModel = new EventMessages();
+            int eventHour = 0;
 
             foreach (var e in events)
             {
-                GenerateHourlyResultMessage(e, eventMessages, messages);
+                if (e.DateTime.Hour != eventHour)
+                {
+                    eventHour = e.DateTime.Hour;
+                    eventMessagesModel.EntriesMessage = new StringBuilder();
+                    eventMessagesModel.LeavingsMessage = new StringBuilder();
+                    eventMessagesModel.CommentsMessage = new StringBuilder();
+                    eventMessagesModel.HighFivesMessage = new StringBuilder();
+                }
+                GenerateHourlyResultMessage(e, eventMessagesModel, messages);
             }
 
             var results = new List<string>();
@@ -32,10 +41,11 @@ namespace ChatHistory.Api.Services
             foreach (var keyValuePair in messages)
             {
                 int index = 0;
+                var time = $"{keyValuePair.Key}:00:";
+                var indent = new string(' ', time.Length);
 
                 foreach (var item in keyValuePair.Value)
                 {
-                    
                     if (!string.IsNullOrEmpty(item))
                     {
                         if (index == 0)
@@ -44,49 +54,11 @@ namespace ChatHistory.Api.Services
                         }
                         else
                         {
-                            results.Add($"       {item}");
+                            results.Add($"{indent} {item}");
                         }
+
+                        index++;
                     }
-
-                    index++;
-                }
-            }
-
-            return results;
-        }
-
-        public IEnumerable<string> FormatDataDaily(IEnumerable<EventDto> events)
-        {
-            var messages = new Dictionary<string, List<string>>();
-            var eventMessages = new EventMessages();
-
-            foreach (var e in events)
-            {
-                GenerateDailyResultMessage(e, eventMessages, messages);
-            }
-
-            var results = new List<string>();
-
-            foreach (var keyValuePair in messages)
-            {
-                int index = 0;
-
-                foreach (var item in keyValuePair.Value)
-                {
-
-                    if (!string.IsNullOrEmpty(item))
-                    {
-                        if (index == 0)
-                        {
-                            results.Add($"{keyValuePair.Key}: {item}");
-                        }
-                        else
-                        {
-                            results.Add($"       {item}");
-                        }
-                    }
-
-                    index++;
                 }
             }
 
@@ -119,94 +91,63 @@ namespace ChatHistory.Api.Services
         }
 
         private void GenerateHourlyResultMessage(EventDto e,
-                                                 EventMessages eventMessages,
+                                                 EventMessages eventMessagesModel,
                                                  Dictionary<string, List<string>> results)
+        {
+            GenerateMessages(e, eventMessagesModel);
+            PopulateMessageCollection(e, eventMessagesModel, results);
+        }
+
+        private void GenerateMessages(EventDto e, EventMessages eventMessagesModel)
         {
             switch (e.EventTypeId)
             {
                 case (int)EventTypeEnumDto.Enter:
-                    eventMessages.EntriesCount++;
-                    bool multipleEntries = eventMessages.EntriesCount > 1;
-                    eventMessages.EntriesMessage = $"{eventMessages.EntriesCount} {(multipleEntries ? "people" : "person")} entered";
+                    eventMessagesModel.EntriesCount++;
+                    bool multipleEntries = eventMessagesModel.EntriesCount > 1;
+                    eventMessagesModel.EntriesMessage = 
+                        new StringBuilder($"{eventMessagesModel.EntriesCount} {(multipleEntries ? "people" : "person")} entered");
                     break;
                 case (int)EventTypeEnumDto.Leave:
-                    eventMessages.LeavingsCount++;
-                    bool multipleLeavings = eventMessages.LeavingsCount > 1;
-                    eventMessages.LeavingsMessage = $"{eventMessages.LeavingsCount} {(multipleLeavings ? "people" : "person")} left";
+                    eventMessagesModel.LeavingsCount++;
+                    bool multipleLeavings = eventMessagesModel.LeavingsCount > 1;
+                    eventMessagesModel.LeavingsMessage = 
+                        new StringBuilder($"{eventMessagesModel.LeavingsCount} {(multipleLeavings ? "people" : "person")} left");
                     break;
                 case (int)EventTypeEnumDto.Comment:
-                    eventMessages.CommentsCount++;
-                    bool multipleComments = eventMessages.CommentsCount > 1;
-                    eventMessages.CommentsMessage = $"{eventMessages.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}";
+                    eventMessagesModel.CommentsCount++;
+                    bool multipleComments = eventMessagesModel.CommentsCount > 1;
+                    eventMessagesModel.CommentsMessage = 
+                        new StringBuilder($"{eventMessagesModel.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}");
                     break;
                 case (int)EventTypeEnumDto.HighFive:
-                    eventMessages.HighFivesCount++;
-                    bool multipleHighFives = eventMessages.HighFivesCount > 1;
-                    eventMessages.HighFivesMessage = $"{eventMessages.HighFivesCount} {(multipleHighFives ? "people" : "person")} high-fived";
+                    eventMessagesModel.HighFivesCount++;
+                    bool multipleHighFives = eventMessagesModel.HighFivesCount > 1;
+                    eventMessagesModel.HighFivesMessage = 
+                        new StringBuilder($"{eventMessagesModel.HighFivesCount} {(multipleHighFives ? "people" : "person")} high-fived");
                     break;
                 default:
                     break;
-            }
-
-            var eventMessagesCollection = new List<string>() {
-                eventMessages.EntriesMessage,
-                eventMessages.LeavingsMessage,
-                eventMessages?.CommentsMessage,
-                eventMessages?.HighFivesMessage };
-
-            if (!results.ContainsKey(e.DateTime.Hour.ToString()))
-            {
-                results.TryAdd(e.DateTime.Hour.ToString(), eventMessagesCollection);
-            }
-            else
-            {
-                results.TryGetValue(e.DateTime.Hour.ToString(), out var messages);
-                messages?.Clear();
-                messages?.AddRange(eventMessagesCollection);
             }
         }
 
-        private void GenerateDailyResultMessage(EventDto e, EventMessages eventMessages, Dictionary<string, List<string>> results)
+        private static void PopulateMessageCollection(EventDto e, EventMessages eventMessagesModel, Dictionary<string, List<string>> results)
         {
-            switch (e.EventTypeId)
-            {
-                case (int)EventTypeEnumDto.Enter:
-                    eventMessages.EntriesCount++;
-                    bool multipleEntries = eventMessages.EntriesCount > 1;
-                    eventMessages.EntriesMessage = $"{eventMessages.EntriesCount} {(multipleEntries ? "people" : "person")} entered";
-                    break;
-                case (int)EventTypeEnumDto.Leave:
-                    eventMessages.LeavingsCount++;
-                    bool multipleLeavings = eventMessages.LeavingsCount > 1;
-                    eventMessages.LeavingsMessage = $"{eventMessages.LeavingsCount} {(multipleLeavings ? "people" : "person")} left";
-                    break;
-                case (int)EventTypeEnumDto.Comment:
-                    eventMessages.CommentsCount++;
-                    bool multipleComments = eventMessages.CommentsCount > 1;
-                    eventMessages.CommentsMessage = $"{eventMessages.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}";
-                    break;
-                case (int)EventTypeEnumDto.HighFive:
-                    eventMessages.HighFivesCount++;
-                    bool multipleHighFives = eventMessages.HighFivesCount > 1;
-                    eventMessages.HighFivesMessage = $"{eventMessages.HighFivesCount} {(multipleHighFives ? "people" : "person")} high-fived";
-                    break;
-                default:
-                    break;
-            }
+            var key = e.DateTime.Hour.ToString();
 
             var eventMessagesCollection = new List<string>() {
-                eventMessages.EntriesMessage,
-                eventMessages.LeavingsMessage,
-                eventMessages?.CommentsMessage,
-                eventMessages?.HighFivesMessage };
+                eventMessagesModel?.EntriesMessage?.ToString(),
+                eventMessagesModel?.LeavingsMessage?.ToString(),
+                eventMessagesModel?.CommentsMessage?.ToString(),
+                eventMessagesModel?.HighFivesMessage?.ToString() };
 
-            if (!results.ContainsKey(e.DateTime.Date.ToString("dd/MM")))
+            if (!results.ContainsKey(key))
             {
-                results.TryAdd(e.DateTime.Date.ToString("dd/MM"), eventMessagesCollection);
+                results.TryAdd(key, eventMessagesCollection);
             }
             else
             {
-                results.TryGetValue(e.DateTime.Date.ToString("dd/MM"), out var messages);
+                results.TryGetValue(key, out var messages);
                 messages?.Clear();
                 messages?.AddRange(eventMessagesCollection);
             }
