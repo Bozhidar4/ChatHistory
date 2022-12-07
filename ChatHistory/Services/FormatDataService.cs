@@ -28,10 +28,10 @@ namespace ChatHistory.Api.Services
                 if (e.DateTime.Hour != eventHour)
                 {
                     eventHour = e.DateTime.Hour;
-                    eventMessagesModel.EntriesMessage = new StringBuilder();
-                    eventMessagesModel.LeavingsMessage = new StringBuilder();
-                    eventMessagesModel.CommentsMessage = new StringBuilder();
-                    eventMessagesModel.HighFivesMessage = new StringBuilder();
+                    eventMessagesModel?.EntriesMessage?.Clear();
+                    eventMessagesModel?.LeavingsMessage?.Clear();
+                    eventMessagesModel?.CommentsMessage?.Clear();
+                    eventMessagesModel?.HighFivesMessage?.Clear();
                 }
                 GenerateHourlyResultMessage(e, eventMessagesModel, messages);
             }
@@ -83,8 +83,6 @@ namespace ChatHistory.Api.Services
                 case (int)EventTypeEnumDto.HighFive:
                     message.Append($" high-fives {e.ReceiverUser?.Name}");
                     break;
-                default:
-                    break;
             }
 
             return message.ToString();
@@ -105,28 +103,34 @@ namespace ChatHistory.Api.Services
                 case (int)EventTypeEnumDto.Enter:
                     eventMessagesModel.EntriesCount++;
                     bool multipleEntries = eventMessagesModel.EntriesCount > 1;
-                    eventMessagesModel.EntriesMessage = 
-                        new StringBuilder($"{eventMessagesModel.EntriesCount} {(multipleEntries ? "people" : "person")} entered");
+
+                    eventMessagesModel?.EntriesMessage?.Clear();
+                    eventMessagesModel?.EntriesMessage?
+                        .Append($"{eventMessagesModel.EntriesCount} {(multipleEntries ? "people" : "person")} entered");
                     break;
                 case (int)EventTypeEnumDto.Leave:
                     eventMessagesModel.LeavingsCount++;
                     bool multipleLeavings = eventMessagesModel.LeavingsCount > 1;
-                    eventMessagesModel.LeavingsMessage = 
-                        new StringBuilder($"{eventMessagesModel.LeavingsCount} {(multipleLeavings ? "people" : "person")} left");
+
+                    eventMessagesModel?.LeavingsMessage?.Clear();
+                    eventMessagesModel?.LeavingsMessage?
+                        .Append($"{eventMessagesModel.LeavingsCount} {(multipleLeavings ? "people" : "person")} left");
                     break;
                 case (int)EventTypeEnumDto.Comment:
                     eventMessagesModel.CommentsCount++;
                     bool multipleComments = eventMessagesModel.CommentsCount > 1;
-                    eventMessagesModel.CommentsMessage = 
-                        new StringBuilder($"{eventMessagesModel.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}");
+
+                    eventMessagesModel?.CommentsMessage?.Clear();
+                    eventMessagesModel?.CommentsMessage?
+                        .Append($"{eventMessagesModel.CommentsCount} comment{(multipleComments ? "s" : string.Empty)}");
                     break;
                 case (int)EventTypeEnumDto.HighFive:
                     eventMessagesModel.HighFivesCount++;
                     bool multipleHighFives = eventMessagesModel.HighFivesCount > 1;
-                    eventMessagesModel.HighFivesMessage = 
-                        new StringBuilder($"{eventMessagesModel.HighFivesCount} {(multipleHighFives ? "people" : "person")} high-fived");
-                    break;
-                default:
+
+                    eventMessagesModel?.HighFivesMessage?.Clear();
+                    eventMessagesModel?.HighFivesMessage?
+                        .Append($"{eventMessagesModel.HighFivesCount} {(multipleHighFives ? "people" : "person")} high-fived");
                     break;
             }
         }
