@@ -12,5 +12,23 @@ namespace ChatHistory.Api.Dtos
         public EventType? EventType { get; set; }
         public User? User { get; set; }
         public User? ReceiverUser { get; set; }
+
+        public EventDto(
+            int id,
+            string? comment,
+            DateTime dateTime,
+            int eventTypeId,
+            EventType eventType,
+            User user,
+            User? receiverUser)
+        {
+            Id = id;
+            Comment = comment;
+            DateTime = dateTime;
+            EventTypeId = eventTypeId;
+            EventType = eventType;
+            User = user;
+            ReceiverUser = receiverUser;
+        }
     }
 }

@@ -21,23 +21,42 @@ namespace ChatHistory.Persistence
 
         public static void SeedData(AppDbContext context)
         {
-            var users = new List<User>
+            var users = GenerateUsers();
+            var eventTypes = GenerateEventTypes();
+            var employees = GenerateEvents();
+
+            context.Users.AddRange(users);
+            context.EventTypes.AddRange(eventTypes);
+            context.Events.AddRange(employees);
+
+            context.SaveChanges();
+        }
+
+        public static IEnumerable<User> GenerateUsers()
+        {
+            return new List<User>
             {
                 new User(1, "Bob"),
                 new User(2, "Kate"),
                 new User(3, "Tom"),
                 new User(4, "Anna")
             };
+        }
 
-            var eventTypes = new List<EventType>
+        public static IEnumerable<EventType> GenerateEventTypes()
+        { 
+            return new List<EventType>
             {
                 new EventType(1, "Enter"),
                 new EventType(2, "Leave"),
                 new EventType(3, "Comment"),
                 new EventType(4, "HighFive")
             };
+        }
 
-            var employees = new List<Event>
+        public static IEnumerable<Event> GenerateEvents()
+        {
+            return new List<Event>
             {
                 new Event(1, string.Empty, new DateTime(2022, 12, 5, 12, 57, 33), 1, 1, null),
                 new Event(2, string.Empty, new DateTime(2022, 12, 5, 12, 58, 05), 4, 1, 2),
@@ -55,12 +74,6 @@ namespace ChatHistory.Persistence
                 new Event(14, "Where is everybody?", new DateTime(2022, 12, 6, 14, 33, 00), 3, 4, null),
                 new Event(15, string.Empty, new DateTime(2022, 12, 6, 14, 33, 15), 2, 4, null)
             };
-
-            context.Users.AddRange(users);
-            context.EventTypes.AddRange(eventTypes);
-            context.Events.AddRange(employees);
-
-            context.SaveChanges();
         }
     }
 }

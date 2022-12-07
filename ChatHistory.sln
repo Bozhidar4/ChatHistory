@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory.Api", "ChatHistory\ChatHistory.Api.csproj", "{72590684-2D0D-4D1E-A24D-AD7BDFCF1739}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatHistory.Api", "ChatHistory\ChatHistory.Api.csproj", "{72590684-2D0D-4D1E-A24D-AD7BDFCF1739}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory.Shared", "ChatHistory.Shared\ChatHistory.Shared.csproj", "{B54564ED-99A5-480E-ADA3-5D25866F382E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatHistory.Shared", "ChatHistory.Shared\ChatHistory.Shared.csproj", "{B54564ED-99A5-480E-ADA3-5D25866F382E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory.Persistence", "ChatHistory.Persistence\ChatHistory.Persistence.csproj", "{66856279-A471-4AA1-84CA-35599547DC3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatHistory.Persistence", "ChatHistory.Persistence\ChatHistory.Persistence.csproj", "{66856279-A471-4AA1-84CA-35599547DC3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory.Domain", "ChatHistory.Domain\ChatHistory.Domain.csproj", "{021C806B-A68B-41CD-8219-FF44067D5638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatHistory.Domain", "ChatHistory.Domain\ChatHistory.Domain.csproj", "{021C806B-A68B-41CD-8219-FF44067D5638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory.Tests", "ChatHistory.Tests\ChatHistory.Tests.csproj", "{0E88AA4F-0724-4DF1-A15A-3F8B46147545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{021C806B-A68B-41CD-8219-FF44067D5638}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021C806B-A68B-41CD-8219-FF44067D5638}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021C806B-A68B-41CD-8219-FF44067D5638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E88AA4F-0724-4DF1-A15A-3F8B46147545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E88AA4F-0724-4DF1-A15A-3F8B46147545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E88AA4F-0724-4DF1-A15A-3F8B46147545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E88AA4F-0724-4DF1-A15A-3F8B46147545}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
