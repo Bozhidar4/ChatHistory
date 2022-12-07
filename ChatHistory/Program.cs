@@ -1,4 +1,5 @@
 using AutoMapper;
+using ChatHistory.Api.Core;
 using ChatHistory.Api.Mappings;
 using ChatHistory.Api.Services;
 using ChatHistory.Api.Services.Interfaces;
@@ -19,6 +20,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 ConfigurePersistance(builder.Services);
 
@@ -42,6 +45,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 
