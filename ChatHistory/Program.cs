@@ -4,7 +4,6 @@ using ChatHistory.Api.Mappings;
 using ChatHistory.Api.Services;
 using ChatHistory.Api.Services.Interfaces;
 using ChatHistory.Domain.Events;
-using ChatHistory.Domain.Users;
 using ChatHistory.Persistence;
 using ChatHistory.Persistence.Repositories;
 using ChatHistory.Shared.Persistence;

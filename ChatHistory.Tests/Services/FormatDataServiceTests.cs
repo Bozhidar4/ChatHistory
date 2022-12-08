@@ -16,6 +16,7 @@ namespace ChatHistory.Tests.Services
         [InlineData(4, "", "12:57: Bob high-fives Kate")]
         public void FormatDataContinuously_Should_Return_Results_Correctly(int eventType, string comment, string message)
         {
+            // Arrange
             var eventsMapped = new List<EventDto>
             {
                 new EventDto(
@@ -46,6 +47,7 @@ namespace ChatHistory.Tests.Services
         [InlineData(4, "", "12:00: 1 person high-fived")]
         public void FormatDataHourly_Should_Return_Results_Correctly(int eventType, string comment, string message)
         {
+            // Arrange
             var eventsMapped = new List<EventDto>
             {
                 new EventDto(
