@@ -14,5 +14,5 @@ To run the project please follow the below steps:
 				- example: <b>2022-12-05</b><br />
 				- data is currently available for December 5th and 6th. If necessary, additional data can be added by modifying <b>DbContextGenerator.cs</b>
 		- <b>aggregation Level</b> - dropdown: select either of the values<br /> 
-				- value 0: display all events separately<br /> 
+				- value 0: display all events for the selected date separately<br /> 
 				- value 1: display all events for the selected date grouped by event type<br /> 
